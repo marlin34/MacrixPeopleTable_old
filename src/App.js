@@ -1,50 +1,12 @@
 import './App.css';
 import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import { useUsers } from './hooks/useUsers';
+import { UserRow } from "./components/UserRow";
 
-function App() {
-  const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
-
-
-  useEffect(() => {
-    const loadUsers = async () => {
-
-      setLoading(true);
-      const response = await axios.get(
-        "https://specialview.backendless.app/api/data/People");
-
-      // After fetching data stored it in users state.
-      setUsers(response.data);
-      setLoading(false);
-    }
-    // Call the function
-    loadUsers();
-  }, []);
-
+function App() {  
+  const { users } = useUsers();
+  
   return <EditablePeopleTable people={users} />
-
-}
-
-function PersonRow({ person }) {
-  return (
-    <tr>
-      <td>{person.FirstName}</td>
-      <td>{person.LastName}</td>
-      <td>{person.StreetName}</td>
-      <td>{person.HouseNumber}</td>
-      <td>{person.ApartmentNumber}</td>
-      <td>{person.PostalCode}</td>
-      <td>{person.Town}</td>
-      <td>{person.PhoneNumber}</td>
-      <td>{person.DateOfBirth}</td>
-      <td>{person.Age}</td>
-      <td>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-  );
 }
 
 function PeopleTable({ people }) {
@@ -52,7 +14,7 @@ function PeopleTable({ people }) {
 
   people.map((row) => {
     rows.push(
-      <PersonRow key={row.Id} person={row} />
+      <UserRow key={row.Id} user={row} />
     );
   });
 
@@ -74,28 +36,164 @@ function PeopleTable({ people }) {
         </tr>
       </thead>
       <tbody>{rows}</tbody>
+      
     </table>
   );
 }
 
+
+
+// const handleAddFormSubmit = (event) => {
+//   event.preventDefault();
+
+//   const newContact = {
+//     id: nanoid(),
+//     fullName: addFormData.fullName,
+//     address: addFormData.address,
+//     phoneNumber: addFormData.phoneNumber,
+//     email: addFormData.email,
+//   };
+
+//   const newContacts = [...contacts, newContact];
+//   setContacts(newContacts);
+// };
+
+//onSubmit={handleAddFormSubmit}
+
 function EditablePeopleTable({ people }) {
+  
+  const [addFormData, setAddFormData] = useState({
+    FirstName: "",
+    LastName: "",
+    StreetName: "",
+    HouseNumber: "",
+    ApartmentNumber: "",
+    PostalCode: "",
+    Town: "",
+    PhoneNumber: "",
+    DateOfBirth: "",
+    Age: "",    
+  });
+
+  const [editFormData, setEditFormData] = useState({
+    FirstName: "",
+    LastName: "",
+    StreetName: "",
+    HouseNumber: "",
+    ApartmentNumber: "",
+    PostalCode: "",
+    Town: "",
+    PhoneNumber: "",
+    DateOfBirth: "",
+    Age: "",    
+  });
+
+  const handleAddFormChange = (event) => {
+    event.preventDefault();
+  
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+  
+    const newFormData = { ...addFormData};
+    newFormData[fieldName] = fieldValue;
+  
+    setEditFormData(newFormData);
+  }
+  
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+  
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+  
+    const newFormData = { ...editFormData };
+    newFormData[fieldName] = fieldValue;
+  
+    setEditFormData(newFormData);
+  };
+
+
   return (
     <div className="container mx-auto">
-      <button
-        // onClick={onAddRowClick}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Add User
-      </button>
+      <h2>Manage Users</h2>
+      
       <div className="flex justify-center mt-8">
         <PeopleTable people={people} />
-        <button
+        
+      </div>
+      <form>
+        <input
+          type="text"
+          name="FirstName"
+          required="required"
+          placeholder="Enter a name..."
+          onChange={handleAddFormChange}
+        />
+         <input
+          type="text"
+          name="LastName"
+          required="required"
+          placeholder="Enter a surname..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="StreetName"
+          required="required"
+          placeholder="Enter a street..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="HouseNumber"
+          required="required"
+          placeholder="Enter a house number..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="ApartmentNumber"
+          required="required"
+          placeholder="Enter a apartment number..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="PostalCode"
+          required="required"
+          placeholder="Enter a postal code..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="Town"
+          required="required"
+          placeholder="Enter a town..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="PhoneNumber"
+          required="required"
+          placeholder="Enter a phone number..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="date"
+          name="DateOfBirth"
+          required="required"
+          placeholder="xxxx-xx-xx"
+          onChange={handleAddFormChange}
+        />
+        <button type="submit">Add</button>
+      </form>
+
+      <button
           key='saveBtn'
           type='button'>Save</button> &nbsp;
         <button
           key='cancelBtn'
           type='button'>Cancel</button>
-      </div>
     </div>
   );
 }
