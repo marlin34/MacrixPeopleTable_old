@@ -1,20 +1,48 @@
 import './App.css';
-import EndpointPeopleMock from './components/endpointMock';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 
-function PersonRow ({ person }) {
-  return  (
+function App() {
+  const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+
+
+  useEffect(() => {
+    const loadUsers = async () => {
+
+      setLoading(true);
+      const response = await axios.get(
+        "https://specialview.backendless.app/api/data/People");
+
+      // After fetching data stored it in users state.
+      setUsers(response.data);
+      setLoading(false);
+    }
+    // Call the function
+    loadUsers();
+  }, []);
+
+  return <EditablePeopleTable people={users} />
+
+}
+
+function PersonRow({ person }) {
+  return (
     <tr>
-      <td>{person.firstName}</td>
-      <td>{person.lastName}</td>
-      <td>{person.streetName}</td>
-      <td>{person.houseNumber}</td>
-      <td>{person.apartmentNumber}</td>
-      <td>{person.postalCode}</td>
-      <td>{person.town}</td>
-      <td>{person.phoneNumber}</td>
-      <td>{person.dateOfBirth}</td>
-      <td>{person.age}</td>
-      <td><button>Delete</button></td>      
+      <td>{person.FirstName}</td>
+      <td>{person.LastName}</td>
+      <td>{person.StreetName}</td>
+      <td>{person.HouseNumber}</td>
+      <td>{person.ApartmentNumber}</td>
+      <td>{person.PostalCode}</td>
+      <td>{person.Town}</td>
+      <td>{person.PhoneNumber}</td>
+      <td>{person.DateOfBirth}</td>
+      <td>{person.Age}</td>
+      <td>
+        <button>Edit</button>
+        <button>Delete</button>
+      </td>
     </tr>
   );
 }
@@ -22,11 +50,9 @@ function PersonRow ({ person }) {
 function PeopleTable({ people }) {
   const rows = [];
 
-  people.forEach(person => {
+  people.map((row) => {
     rows.push(
-      <PersonRow 
-        person = {person}
-        key = {person.Id} />
+      <PersonRow key={row.Id} person={row} />
     );
   });
 
@@ -44,30 +70,34 @@ function PeopleTable({ people }) {
           <th>Phone Number</th>
           <th>Date of Birth</th>
           <th>Age</th>
+          <th>Actions</th>
         </tr>
       </thead>
-      <tbody> {rows}</tbody>
+      <tbody>{rows}</tbody>
     </table>
   );
 }
 
-function EditablePeopleTable({people}) {
+function EditablePeopleTable({ people }) {
   return (
-    <div>
-      <PeopleTable people={people} />
+    <div className="container mx-auto">
       <button
-        key='saveBtn' 
-        type='button'>Save</button> &nbsp;        
+        // onClick={onAddRowClick}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Add User
+      </button>
+      <div className="flex justify-center mt-8">
+        <PeopleTable people={people} />
         <button
-        key='cancelBtn' 
-        type='button'>Cancel</button>
+          key='saveBtn'
+          type='button'>Save</button> &nbsp;
+        <button
+          key='cancelBtn'
+          type='button'>Cancel</button>
+      </div>
     </div>
   );
-}
-
-
-function App() {
-  return <EditablePeopleTable people = {EndpointPeopleMock} />
 }
 
 export default App;
