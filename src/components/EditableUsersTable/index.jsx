@@ -1,38 +1,17 @@
-import React, { useState,useEffect, Fragment } from 'react';
-//import { useUsers } from './hooks/useUsers';
+import React, { useState, useEffect, Fragment } from 'react';
+import { useUsers } from '../../hooks/useUsers';
 import UsersTable from '../UsersTable';
-import axios from 'axios';
 
 
 function EditableUsersTable() {
 
   const [users, setUsers] = useState([]);
 
-  const useUsers = () => {    
-    
-    const fetchUsers = async () => {
-        
-        const response = await axios.get(
-            "https://specialview.backendless.app/api/data/People");
-
-        if(response && response.data)
-            setUsers(response.data);       
-    };
-
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    return { users };
-};
-
   // useUsers custom hook do zaciągnięcia userów z API
-  useUsers();
-  // to mi śmierdzi - najlepiej do potwierdzenia czy tak można.. 
-  // pytanie czy będzie tu rerender czy tylko domyślnie na starcie/refreshu strony załaduje dane z API
+  const { fetchedUsers } = useUsers();
+  setUsers(fetchedUsers);
 
-  
-  const hasUsers = () => users.length > 0
+  //const hasUsers = () => fetchedUsers.length > 0
 
   // state do edycji danego wiersza 
   const [editedUserId, setEditedUserId] = useState(null);
@@ -50,7 +29,7 @@ function EditableUsersTable() {
     Age: "",
   });
 
-  
+
 
   //na potem do add userForm
   // const [addUser, setAddUser] = useState({
@@ -96,6 +75,10 @@ function EditableUsersTable() {
   // !!!!!!!!!!
   // for age there should be func to calculate the age based on Date.Now - DateOfBirth 
 
+  // const calculateAge = (user.DateOfBirth) => {
+
+  // }
+
   const handleDeleteAction = (userId) => {
     const newUsers = [...users];
 
@@ -120,32 +103,32 @@ function EditableUsersTable() {
   //3. dodanie akcji na buttony Save/Cancel - push na API i restore stanu z API 
   //{!hasUsers(
   //  <em>Please add some users to the table.</em>
-   // )}
+  // )}
 
   return (
     <div className="container mx-auto">
-      <h2>Manage Users</h2>
+      <h2>Manage Users</h2>      
 
       <div className="flex justify-center mt-8">
-      
-        <UsersTable 
-        users={users}
-        editedUser={editedUser}
-        editedRowId={editedUserId}
-        handleEditAction={handleEditAction}
-        handleDeleteAction={handleDeleteAction}
-        handleEditInputChange={handleEditInputChange}
-        handleCancelAction={handleCancelAction}>
-        </UsersTable>         
+
+        <UsersTable
+          users={users}
+          editedUser={editedUser}
+          editedRowId={editedUserId}
+          handleEditAction={handleEditAction}
+          handleDeleteAction={handleDeleteAction}
+          handleEditInputChange={handleEditInputChange}
+          handleCancelAction={handleCancelAction}>
+        </UsersTable>
       </div>
 
-        <button
-          key='saveBtn'
-          type='button'>Save</button> &nbsp;
-        <button
-          key='cancelBtn'
-          type='button'>Cancel</button>
-      
+      <button
+        key='saveBtn'
+        type='button'>Save</button> &nbsp;
+      <button
+        key='cancelBtn'
+        type='button'>Cancel</button>
+
 
     </div>
   );
