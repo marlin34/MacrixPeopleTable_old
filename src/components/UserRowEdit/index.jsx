@@ -1,0 +1,95 @@
+import React from "react";
+
+export function UserRowEdit({ editedUser, handleEditInputChange, handleCancelAction }) {
+
+  return (
+    <tr>
+      <td>
+        <input
+          type="text"
+          name="FirstName"
+          required="required"
+          onChange={handleEditInputChange}
+          value={editedUser.FirstName}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="LastName"
+          required="required"
+          onChange={handleEditInputChange}
+          value={editedUser.LastName}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="StreetName"
+          required="required"
+          onChange={handleEditInputChange}
+          value={editedUser.StreetName}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="HouseNumber"
+          required="required"
+          onChange={handleEditInputChange}
+          value={editedUser.HouseNumber}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="ApartmentNumber"          
+          onChange={handleEditInputChange}
+          value={editedUser.ApartmentNumber}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="PostalCode"
+          required="required"
+          onChange={handleEditInputChange}
+          value={editedUser.PostalCode}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="Town"
+          required="required"
+          onChange={handleEditInputChange}
+          value={editedUser.Town}
+        />
+      </td>
+      <td>
+        <input
+          type="number"
+          name="PhoneNumber"
+          required="required"
+          onChange={handleEditInputChange}
+          value={editedUser.PhoneNumber}
+        />
+      </td>
+      <td>
+        <input
+          type="date"
+          name="DateOfBirth"
+          required="required"
+          onChange={handleEditInputChange}
+          value={editedUser.DateOfBirth}
+        />
+      </td>
+      <td>
+        <button type="submit">Save</button>
+        <button type="button" onClick={handleCancelAction}>
+          Cancel
+        </button>
+      </td>
+    </tr>
+  );
+}
