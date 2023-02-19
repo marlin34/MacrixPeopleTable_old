@@ -1,7 +1,7 @@
+import React from "react";
 
-export function UserRow(props) {
-    const { user } = props;
-
+export function UserRow({user, handleEditAction, handleDeleteAction }) {
+    
     return (
       <tr>
         <td>{user.FirstName}</td>
@@ -15,8 +15,16 @@ export function UserRow(props) {
         <td>{user.DateOfBirth}</td>
         <td>{user.Age}</td>
         <td>
-          <button>Edit</button>
-          <button>Delete</button>
+          <button
+            type="button"
+            onClick={(e) => handleEditAction(e, user)}
+            >
+              Edit</button>
+          <button
+            type="button"
+            onClick={() => handleDeleteAction(user.id)}
+          >
+            Delete</button>
         </td>
       </tr>
     );
