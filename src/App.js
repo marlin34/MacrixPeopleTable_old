@@ -1,11 +1,14 @@
 import './App.css';
-import React from 'react'
-import EditableUsersTable from './components/EditableUsersTable';
+import React from 'react';
+import InlineEditableUsersTable from './components/InlineEditableUsersTable';
+//import EditableUsersTable from './components/EditableUsersTable';
 
 function App() {
-  //// do dodania style i jakiieś panele/divy pageContainer
- return (
-  <EditableUsersTable />
+  
+ return (  
+  <main>
+    <InlineEditableUsersTable />
+  </main>
  );
 }
 

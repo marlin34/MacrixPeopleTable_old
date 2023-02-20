@@ -9,9 +9,9 @@ Backendless.initApp('5011A28E-9A29-C70B-FF5B-55638A3CA500', '84238B35-1619-426D-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <App />
-  </React.StrictMode>
+  //</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,18 +1,43 @@
 
-  export function Columns(){
-    return (
-      <tr>
-        <th>FirstName</th>
-        <th>LastName</th>
-        <th>StreetName</th>
-        <th>HouseNumber</th>
-        <th>ApartmentNumber</th>
-        <th>PostalCode</th>
-        <th>Town</th>
-        <th>PhoneNumber</th>
-        <th>DateOfBirth</th>
-        <th>Age</th>
-        <th>Actions</th>
-      </tr>    
-    );
-  }
+  export const Columns = [
+    {
+      Header: "First Name",
+      accessor: "FirstName",
+    },
+    {
+      Header: "Last Name",
+      accessor: "LastName",
+    },
+    {
+      Header: "Street Name",
+      accessor: "StreetName",
+    },
+    {
+      Header: "House Number",
+      accessor: "HouseNumber",
+    },
+    {
+      Header: "Apartment Number",
+      accessor: "ApartmentNumber",
+    },
+    {
+      Header: "Postal Code",
+      accessor: "PostalCode",
+    },
+    {
+      Header: "Town",
+      accessor: "Town",
+    },
+    {
+      Header: "Phone Number",
+      accessor: "Phone Number",
+    },
+    {
+      Header: "Date Of Birth",
+      accessor: "DateOfBirth",
+    },
+    {
+      Header: "Age",
+      accessor: "Age",
+    },
+  ];
